@@ -10,7 +10,7 @@ link evmux
 link ivalue 
 link usage
 link strings
-
+#SEE rosetta string matching...use image() and match()
 #Notes for future stuff:
 #note taking utility
 #cannot open file 1 cannot open file 2 etc
