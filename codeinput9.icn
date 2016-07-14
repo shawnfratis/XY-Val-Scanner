@@ -1,0 +1,350 @@
+link wopen
+link xcompat
+link color
+link graphics
+link numbers
+link options
+link button
+link dsetup
+link evmux
+link ivalue 
+link usage
+link strings
+
+#SEE rosetta string matching...use image() and match()
+#Notes for future stuff:
+#note taking utility
+#cannot open file 1 cannot open file 2 etc
+#file names in output
+#warning messages
+#print and view code in window
+#BETTER CHECK FOR Q23
+#Q23 OMIT AT CERTAIN PLACES?
+#switch between codes within prog
+#ui IVIB
+#x y scan sim
+#&INPUT SEE CHOOSE.ICN
+procedure main(args)
+
+   in1 := open(args[1]) | stop("*** cannot open file 1")
+
+xval := ["X1.0","X300.1","X1.2","X1.3","X1.4","X1.5","X1.6","X1.7","X1.8","X1.9","X2.0","X2.1","X2.2","X2.3","X2.4","X2.5","X2.6"]
+
+xxval := ["X1.0","X300.1","X1.2","X1.3","X1.4","X1.5","X1.6","X1.7","X1.8","X1.9","X2.0","X2.1","X2.2","X2.3","X2.4","X2.5","X2.6"]
+
+xxxval := [1.0,300.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6]
+
+yval := ["Y1.0","Y1.1","Y1.2","Y1.3","Y1.4","Y1.5","Y1.6","Y1.7","Y1.8","Y1.9","Y2.0","Y2.1","Y2.2","Y2.3","Y2.4","Y2.5","Y2.6"]
+
+yyval := ["Y1.0","Y1.1","Y1.2","Y1.3","Y1.4","Y1.5","Y1.6","Y1.7","Y1.8","Y1.9","Y2.0","Y2.1","Y2.2","Y2.3","Y2.4","Y2.5","Y2.6"]
+
+yyyval := [1.0,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8,1.9,2.0,2.1,2.2,2.3,2.4,2.5,2.6]
+
+#####################################
+#cel 1
+#####################################
+     count1 := 0
+     yyy1 := yval[1]
+     yyy111 := yyval[1]
+
+       every !in1  ?  {
+       write(find(yyy1))
+     } do
+      count1 +:= 1   
+if match(yyy1,yyy111) then yyy11 := yyyval[1]
+else yyy11 := 0
+######################################
+  count2 := 0
+   axxx1 := xval[2]
+    axxx111 := xxval[2]
+       every !in1  ?  {
+       write(find(axxx1))
+     } do
+   count2 +:= 1   
+if match(axxx1,axxx111) then xxx11 := xxxval[2]
+else xxx11 := 0
+#####################################
+#cel 2
+#####################################
+      count3 := 0
+      yyy1 := yval[3]
+     yyy111 := yyval[3] 
+       every !in1  ?  {
+       write(find(yyy1))
+     } do
+       count3 +:= 1
+if match(yyy1,yyy111) then yyy22 := yyyval[3]
+else yyy22 := 0
+######################################
+   count4 := 0
+    xxx1 := xval[4]
+     xxx111 := xxval[4] 
+       every !in1  ?  {
+       write(find(xxx1))
+     } do
+      count4 +:= 1
+if match(xxx1,xxx111) then xxx22 := xxxval[4]
+else xxx22 := 0
+#####################################
+#cel 3
+#####################################
+      count5 := 0
+       yyy1 := yval[5]
+     yyy111 := yyval[5] 
+       every !in1  ?  {
+       write(find(yyy1))
+     } do
+      count5 +:= 1
+if match(yyy1,yyy111) then yyy33 := yyyval[5]
+else yyy33 := 0
+######################################
+     count6 := 0
+    xxx1 := xval[6]
+     xxx111 := xxval[6] 
+       every !in1  ?  {
+       write(find(xxx1))
+     } do
+      count6 +:= 1
+if match(xxx1,xxx111) then xxx33 := xxxval[6]
+else xxx33 := 0
+######################################
+    count7 := 0
+    yyy1 := yval[7]
+     yyy111 := yyval[7] 
+       every !in1  ?  {
+       write(find(yyy1))
+     } do
+     count7 +:= 1
+ if match(yyy1,yyy111) then yyy44 := yyyval[7]
+else yyy44 := 0
+######################################
+    count8 := 0
+    xxx1 := xval[8]
+     xxx111 := xxval[8] 
+       every !in1  ?  {
+       write(find(xxx1))
+     } do
+      count8 +:= 1
+if match(xxx1,xxx111) then xxx44 := xxxval[8]
+else xxx44 := 0
+######################################
+#######################################
+
+window(xxx11,yyy11,xxx22,yyy22,xxx33,yyy33,xxx44,yyy44)
+
+end
+
+#####################################################################################
+
+procedure window(a1,b1,a2,b2,a3,b3,a4,b4)
+
+WOpen("label=Gscan01", "size=800,980","bg=black","linewidth=1","fg=orange")
+
+        WAttrib("dx=1", "dy=1")
+
+aa :=  0.5
+bb := 0.5
+
+ draw01(aa,bb,a1,b1)
+ draw01(a1,b1,a2,b2)
+ draw01(a2,b2,a3,b3)
+ draw01(a3,b3,a4,b4)
+
+
+       repeat {
+
+w := Active() | stop("Active fails")
+
+################################
+#not presently used - can be modified to re-introduce mouse events.
+   
+       case e := Event(w) of {
+
+&lpress | &mpress | &rpress: {
+	      x1 := &x
+	      y1 := &y
+	      x2 := y2 := &null
+	  }
+
+################################
+#begin basic keyboard commands.
+
+#this path is currently set for Windows.
+#You will have to modify it for other platforms. 
+
+"\z": {
+	 
+        WriteImage("C:/Users/sfratis/Desktop/gs01.png")
+
+}
+
+################################
+
+
+"\]": {       
+              EraseArea()
+              }
+"\-": {  
+              clock()
+              }
+"\@": {
+              exit()
+              }
+"\?": { 
+              Notice("\] = Erase area, - = Timestamp, Z = Save Image, , = Open Image, @ = Exit")
+              }
+"\,": { 
+              openImage()
+                      
+	}
+     }
+  }
+
+WDone()
+
+end
+
+procedure cube07(c,d)
+
+eax := 125
+eay := 10
+
+dax := 175
+day := 10
+
+(ebx := 165,eby := 10 ,ecx := 165,ecy := 15 + c,edx :=125,edy := 15 + c)
+
+(dbx := 235,dby := 10,dcx := 235,dcy := 15 + d,ddx := 175,ddy := 15 + d)
+
+
+#######################################
+
+Fg("dark blue")
+ FillPolygon(eax,eay,ebx,eby,ecx,ecy,edx,edy)
+
+Fg("yellow")
+ FillPolygon(dax,day,dbx,dby,dcx,dcy,ddx,ddy)
+
+end
+
+##############################################################################################
+
+procedure cube08(c,d)
+
+eax := 255
+eay := 10
+
+dax := 300
+day := 10
+
+(ebx := 295,eby := 10 ,ecx := 295,ecy := 15 + c,edx :=255,edy := 15 + c)
+
+(dbx := 365,dby := 10,dcx := 365,dcy := 15 + d,ddx := 300,ddy := 15 + d)
+
+
+#######################################
+
+Fg("blue")
+ FillPolygon(eax,eay,ebx,eby,ecx,ecy,edx,edy)
+
+Fg("purple-magenta")
+ FillPolygon(dax,day,dbx,dby,dcx,dcy,ddx,ddy)
+
+end
+
+#####################################################################
+
+procedure cube09(c,d)
+
+eax := 375
+eay := 10
+
+dax := 410
+day := 10
+
+(ebx :=400 ,eby := 10 ,ecx := 400,ecy := 15 + c,edx :=375,edy := 15 + c)
+
+(dbx :=455,dby := 10,dcx := 455,dcy := 15 + d,ddx := 410,ddy := 15 + d)
+
+
+#######################################
+
+Fg("blue")
+ FillPolygon(eax,eay,ebx,eby,ecx,ecy,edx,edy)
+
+Fg("dark brown")
+ FillPolygon(dax,day,dbx,dby,dcx,dcy,ddx,ddy)
+
+end
+
+##############################################################################################
+
+procedure cube10(c,d)
+
+eax := 475
+eay := 10
+
+dax := 510
+day := 10
+
+(ebx := 500,eby := 10 ,ecx := 500,ecy := 15 + c,edx :=475,edy := 15 + c)
+
+(dbx := 565,dby := 10,dcx := 565,dcy := 15 + d,ddx := 510,ddy := 15 + d)
+
+
+#######################################
+
+Fg("dark blue")
+ FillPolygon(eax,eay,ebx,eby,ecx,ecy,edx,edy)
+
+Fg("reddish-yellow")
+ FillPolygon(dax,day,dbx,dby,dcx,dcy,ddx,ddy)
+
+end
+
+#####################################################################
+
+procedure clock()
+
+WAttrib("dx=1", "dy=700")
+
+        Fg("green")
+ 
+        WWrite("milliseconds of CPU time = ",&time)
+        WWrite("Time of day as hh:mm:ss (24-hour format) = ",&clock)
+        WWrite("current date in yyyy/mm/dd format = ",&date)
+        WWrite("timestamp with day of the week, date, and current time to the minute = ",&dateline)
+  
+end
+
+#######################################################################
+
+#open image
+
+procedure openImage()
+
+WOpen("label=Gscan01", "size=50,50","bg=black","linewidth=1","fg=orange")
+
+         WAttrib("dx=1", "dy=1")
+
+        ReadImage("C:/Users/sfratis/Desktop/gs01.png",1,1)
+
+end
+
+#######################################################################
+
+procedure draw01(aax,aay,bbx,bby)
+
+Fg("red")
+
+WAttrib("dx=10", "dy=10")
+
+        DrawLine(aax,aay,bbx,bby)
+
+end
+
+
+
+#END OF PROGRAM####################
+
+#########################################################
